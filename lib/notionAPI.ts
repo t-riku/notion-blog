@@ -11,5 +11,19 @@ export const getAllPosts = async () => {
   });
 
   const allPosts = posts.results;
-  return allPosts;
+
+  //   一つ一つのポストを展開
+  return allPosts.map((post) => {
+    return getPageMeataData(post);
+  });
+};
+
+const getPageMeataData = (post) => {
+  return {
+    id: post.id,
+    title: post.properties.名前.title[0].plain_text,
+    description: post.properties.Description.rich_text[0].plain_text,
+    date: post.properties.Date.date.start,
+    slug: post.properties.Slug.rich_text[0].plain_text,
+  };
 };
